@@ -82,7 +82,6 @@
                 <span class="fa-stack fa-lg">
                   <i class="fa fa-circle fa-stack-2x"></i>
                   <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
                 </span>
               </a>
             </li>
@@ -352,41 +351,40 @@
 
     </div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Plugin JavaScript -->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for this template -->
-    <script src="js/resume.min.js"></script>
+<!-- Custom scripts for this template -->
+<script src="js/resume.min.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsPdjH3161rtpBMQJwQmJAyj_WHh2GqBw&callback=initMap" async defer></script>
-
-    <script>
+<!-- Google Maps Script for Travel Diary -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsPdjH3161rtpBMQJwQmJAyj_WHh2GqBw&callback=initMap" async defer></script>
+<script>
 function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 2,
     center: { lat: 20.0, lng: 0.0 },
   });
 
-  const locations = [
-    { lat: 37.7749, lng: -122.4194, title: "San Francisco, USA" },
-    { lat: 25.276987, lng: 55.296249, title: "Dubai, UAE" },
-    { lat: 1.3521, lng: 103.8198, title: "Singapore" },
-    { lat: 13.0827, lng: 80.2707, title: "Chennai, India" },
-    { lat: 55.9533, lng: -3.1883, title: "Scotland (Edinburgh)" },
-    { lat: 40.7128, lng: -74.0060, title: "New York, USA" }
-  ];
-
-  locations.forEach(loc => {
-    new google.maps.Marker({
-      position: { lat: loc.lat, lng: loc.lng },
-      map: map,
-      title: loc.title
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vROeixZAyaeakGgvhF6yHbeRr55chYv9uu7p4OyME8AyYsk6KaWlzFz-z43mcv5dA/pub?output=csv")
+    .then(response => response.text())
+    .then(data => {
+      const lines = data.split("\n").slice(1); // FIXED: escape issue
+      lines.forEach(line => {
+        const [title, lat, lng] = line.split(",");
+        if (title && lat && lng) {
+          new google.maps.Marker({
+            position: { lat: parseFloat(lat), lng: parseFloat(lng) },
+            map: map,
+            title: title.trim()
+          });
+        }
+      });
     });
-  });
 }
 </script>
 
