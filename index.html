@@ -370,7 +370,8 @@ function initMap() {
     center: { lat: 20.0, lng: 0.0 },
   });
 
-  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vROeixZAyaeakGgvhF6yHbeRr55chYv9uu7p4OyME8AyYsk6KaWlzFz-z43mcv5dA/pub?output=csv")
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRaviiOQsklitrSChnJZGOV6nyPW6j4RRiSHiPtPW_m911yEzf-A2jGoGVYJIYnMO8iGveNrm3-ZIjj/pub?output=csv")
+  
     .then(response => response.text())
     .then(data => {
       const lines = data.split("\n").slice(1); // FIXED: escape issue
