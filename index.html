@@ -371,7 +371,6 @@ function initMap() {
   });
 
   fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRaviiOQsklitrSChnJZGOV6nyPW6j4RRiSHiPtPW_m911yEzf-A2jGoGVYJIYnMO8iGveNrm3-ZIjj/pub?output=csv")
-  
     .then(response => response.text())
     .then(data => {
       const lines = data.split("\n").slice(1); // FIXED: escape issue
